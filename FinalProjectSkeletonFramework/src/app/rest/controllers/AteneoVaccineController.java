@@ -165,7 +165,7 @@ public class AteneoVaccineController {
 	@GET
 	@Path("/viewFacultyDetails")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String viewFacultyDetails(@QueryParam("id") Long id)
+	public java.util.Optional<Faculty> viewFacultyDetails(@QueryParam("id") Long id)
 	{
 		return fm.viewFacultyDetails(id);
 	}

@@ -10,6 +10,7 @@ import javax.persistence.Id;
 
 @Entity
 public class Faculty {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column
