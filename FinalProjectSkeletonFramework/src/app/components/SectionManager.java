@@ -31,6 +31,7 @@ public class SectionManager {
 	{
 		Section s = new Section();
 		s.setName(name);
+		s.setStudents("");
 		return s;
 	}
 
@@ -53,6 +54,7 @@ public class SectionManager {
 	}
 
 	public String addStudentToSection(Long studentID, Long sectionID) {
+		Boolean exists = false;
 		Section sec = sectionRepo.getById(sectionID);
 		Student stu = studentRepo.getById(studentID);
 		
@@ -66,59 +68,11 @@ public class SectionManager {
 			getCurrentStudentsOfSection = "";
 		}
 		
-//		Adding Student to Section
-		String addedStudent = "ID#" + addedStudentID;
-		System.out.println("Added Student:" + addedStudent);
-		
-//		Check if students of section currently empty
-		if (getCurrentStudentsOfSection.equals("")) {
-			getCurrentStudentsOfSection = addedStudent;
-		}
-		else {
-			getCurrentStudentsOfSection = getCurrentStudentsOfSection + " " +  addedStudent;
-		}
-		
-		System.out.println("Updated Students of Section: " + getCurrentStudentsOfSection);
-		
-		sec.setStudents(getCurrentStudentsOfSection);
-		sectionRepo.save(sec);
-		
-//		Adding Section to Student
-		String addedSection = "SectionID#" + addedSectionID;
-		System.out.println("Added Section: " + addedSection);
-		
-//		Check if sections of student currently empty
-		if (getCurrentSectionsOfStudent == null) {
-			getCurrentSectionsOfStudent = "";
-		}
-		
-		if (getCurrentSectionsOfStudent.equals("")) {
-			getCurrentSectionsOfStudent = addedSection;
-		}
-		else {
-			getCurrentSectionsOfStudent = getCurrentSectionsOfStudent + " " + addedSection;
-		}
-		
-		System.out.println("Updated Sections of Student: " + getCurrentSectionsOfStudent);
-		
-		stu.setSections(getCurrentSectionsOfStudent);
-		studentRepo.save(stu);
-		
-//		---------------------------------------------------------
-//		---------------------------------------------------------
-//		VACCINATION RATE LOGIC
-		List<Student> allStudents = studentRepo.findAll();
-		String test[] = getCurrentStudentsOfSection.split("\\s+");
-		System.out.println(test[0]);
-		System.out.println(test);
-		
-		int vaccinated = 0;
-		int notVaccinated = 0;
-		int totalStudents = 0;
-		
-		List<String> currentStudentsInSection = new ArrayList<>();
-//		Removing ID# from each instance in the array
-		for (String i : test) {
+//		Checking if Student is already in Section
+		String checkerForStudents = sec.getStudents();
+		String checkerList[] = checkerForStudents.split("\\s+");
+		List<String> finalChecker = new ArrayList<>();
+		for (String i : checkerList) {
 			List<Character> chars = new ArrayList<>();
 	        for (char ch : i.toCharArray()) {
 	            String characterString = Character.toString(ch);
@@ -134,49 +88,137 @@ public class SectionManager {
 				String characterString = Character.toString(ch);
 				numberString = numberString + characterString;
 			}
-			currentStudentsInSection.add(numberString);
+			finalChecker.add(numberString);
 		}
 		
-		System.out.println(currentStudentsInSection);
+		System.out.println("FINAL CHECKER: " + finalChecker);
 		
-		
-		for (Student i: allStudents) {
-			System.out.println("current id: " + i.getId());
-			for(String code: currentStudentsInSection) {
-				System.out.println(code);
-				if(code.equals(i.getId().toString())) {
-					Boolean checker = i.getVaccineStatus();
-					if (checker==true) {
-						vaccinated+=1;
-					}
-					else {
-						notVaccinated+=1;
-					}
-					totalStudents+=1;
-				}
+		for (String i: finalChecker) {
+			if (i.equals(studentID.toString())) {
+				exists = true;
+				break;
 			}
 		}
 		
-		System.out.println("V:" + vaccinated);
-		System.out.println("NV:" + notVaccinated);
-		System.out.println("TOTAL:" + totalStudents);
-		
-		double SV = vaccinated+notVaccinated;
-		double SSV = vaccinated/SV;
-		double SSSV = SSV*100;
-		System.out.println(SSSV);
-		
-		sec.setNumberOfStudents(totalStudents);
-		
-		String studentVaccinationRateFinal = Double.toString(SSSV) + "%";
-		System.out.println(studentVaccinationRateFinal);
-		
-		sec.setStudentVaccinationRate(studentVaccinationRateFinal);
+		if (exists == true) {
+			return "This student is already present inside that section!";
+		}
+		else {
+//			Adding Student to Section
+			String addedStudent = "ID#" + addedStudentID;
+			System.out.println("Added Student:" + addedStudent);
+			
+//			Check if students of section currently empty
+			if (getCurrentStudentsOfSection.equals("")) {
+				getCurrentStudentsOfSection = addedStudent;
+			}
+			else {
+				getCurrentStudentsOfSection = getCurrentStudentsOfSection + " " +  addedStudent;
+			}
+			
+			System.out.println("Updated Students of Section: " + getCurrentStudentsOfSection);
+			
+			sec.setStudents(getCurrentStudentsOfSection);
+			sectionRepo.save(sec);
+			
+//			Adding Section to Student
+			String addedSection = "SectionID#" + addedSectionID;
+			System.out.println("Added Section: " + addedSection);
+			
+//			Check if sections of student currently empty
+			if (getCurrentSectionsOfStudent == null) {
+				getCurrentSectionsOfStudent = "";
+			}
+			
+			if (getCurrentSectionsOfStudent.equals("")) {
+				getCurrentSectionsOfStudent = addedSection;
+			}
+			else {
+				getCurrentSectionsOfStudent = getCurrentSectionsOfStudent + " " + addedSection;
+			}
+			
+			System.out.println("Updated Sections of Student: " + getCurrentSectionsOfStudent);
+			
+			stu.setSections(getCurrentSectionsOfStudent);
+			studentRepo.save(stu);
+			
+//			---------------------------------------------------------
+//			---------------------------------------------------------
+//			VACCINATION RATE LOGIC
+			List<Student> allStudents = studentRepo.findAll();
+			String test[] = getCurrentStudentsOfSection.split("\\s+");
+			System.out.println(test[0]);
+			System.out.println(test);
+			
+			int vaccinated = 0;
+			int notVaccinated = 0;
+			int totalStudents = 0;
+			
+			List<String> currentStudentsInSection = new ArrayList<>();
+//			Removing ID# from each instance in the array
+			for (String i : test) {
+				List<Character> chars = new ArrayList<>();
+		        for (char ch : i.toCharArray()) {
+		            String characterString = Character.toString(ch);
+
+		            if (characterString.equals("I") || characterString.equals("D") || characterString.equals("#")) {
+		            }
+		            else {
+		            	chars.add(ch);
+		            }
+		        }
+		        String numberString = "";
+				for (char ch : chars) {
+					String characterString = Character.toString(ch);
+					numberString = numberString + characterString;
+				}
+				currentStudentsInSection.add(numberString);
+			}
+			
+			System.out.println(currentStudentsInSection);
+			
+			
+			for (Student i: allStudents) {
+				System.out.println("current id: " + i.getId());
+				for(String code: currentStudentsInSection) {
+					System.out.println(code);
+					if(code.equals(i.getId().toString())) {
+						Boolean checker = i.getVaccineStatus();
+						if (checker==true) {
+							vaccinated+=1;
+						}
+						else {
+							notVaccinated+=1;
+						}
+						totalStudents+=1;
+					}
+				}
+			}
+			
+			System.out.println("V:" + vaccinated);
+			System.out.println("NV:" + notVaccinated);
+			System.out.println("TOTAL:" + totalStudents);
+			
+			double SV = vaccinated+notVaccinated;
+			double SSV = vaccinated/SV;
+			double SSSV = SSV*100;
+			System.out.println(SSSV);
+			
+			sec.setNumberOfStudents(totalStudents);
+			
+			String studentVaccinationRateFinal = Double.toString(SSSV) + "%";
+			System.out.println(studentVaccinationRateFinal);
+			
+			sec.setStudentVaccinationRate(studentVaccinationRateFinal);
 
 
-		sectionRepo.save(sec);
+			sectionRepo.save(sec);
+			
+			return "Student added to Section!\n Current Students:\n" + getCurrentStudentsOfSection;
+		}
 		
-		return "Student added to Section!\n Current Students:\n" + getCurrentStudentsOfSection;
+		
+
 	}
 
 	public String removeStudentFromSection(Long studentID, Long sectionID) {

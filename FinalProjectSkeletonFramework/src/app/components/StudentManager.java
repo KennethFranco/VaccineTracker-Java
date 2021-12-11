@@ -40,6 +40,9 @@ public class StudentManager {
 		s.setYear(year);
 		s.setVaccineName(vaccineName);
 		s.setVaccineStatus(vaccineStatus);
+		s.setDeptName("");
+		s.setCourse("");
+		s.setSections("");
 		return s;
 	}
 
