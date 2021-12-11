@@ -22,7 +22,7 @@ public class Department {
 	private String students;
 	
 	@Column
-	private String[] faculties;
+	private String faculties;
 	
 	@Column
 	private int numberOfStudents;
@@ -31,10 +31,10 @@ public class Department {
 	private int numberOfFaculty;
 	
 	@Column 
-	private double studentVaccinationRate;
+	private String studentVaccinationRate;
 	
 	@Column
-	private double facultyVaccinationRate;
+	private String facultyVaccinationRate;
 	
 	@Column
 	private double deptVaccinationRate;
@@ -67,11 +67,11 @@ public class Department {
 		this.students = students;
 	}
 
-	public String[] getFaculties() {
+	public String getFaculties() {
 		return faculties;
 	}
 
-	public void setFaculties(String[] faculties) {
+	public void setFaculties(String faculties) {
 		this.faculties = faculties;
 	}
 
@@ -91,20 +91,20 @@ public class Department {
 		this.numberOfFaculty = numberOfFaculty;
 	}
 
-	public double getStudentVaccinationRate() {
+	public String getStudentVaccinationRate() {
 		return studentVaccinationRate;
 	}
 
-	public void setStudentVaccinationRate(double studentVaccinationRate) {
-		this.studentVaccinationRate = studentVaccinationRate;
+	public void setStudentVaccinationRate(String studentVaccinationRateFinal) {
+		this.studentVaccinationRate = studentVaccinationRateFinal;
 	}
 
-	public double getFacultyVaccinationRate() {
+	public String getFacultyVaccinationRate() {
 		return facultyVaccinationRate;
 	}
 
-	public void setFacultyVaccinationRate(double facultyVaccinationRate) {
-		this.facultyVaccinationRate = facultyVaccinationRate;
+	public void setFacultyVaccinationRate(String facultyVaccinationRateFinal) {
+		this.facultyVaccinationRate = facultyVaccinationRateFinal;
 	}
 
 	public double getDeptVaccinationRate() {
@@ -115,8 +115,8 @@ public class Department {
 		this.deptVaccinationRate = deptVaccinationRate;
 	}
 
-	public Department(Long id, String name, String students, String[] faculties, int numberOfStudents,
-			int numberOfFaculty, double studentVaccinationRate, double facultyVaccinationRate,
+	public Department(Long id, String name, String students, String faculties, int numberOfStudents,
+			int numberOfFaculty, String studentVaccinationRate, String facultyVaccinationRate,
 			double deptVaccinationRate) {
 		super();
 		this.id = id;
@@ -132,11 +132,13 @@ public class Department {
 
 	@Override
 	public String toString() {
-		return "Department [id=" + id + ", name=" + name + ", students=" + students + ", faculties="
-				+ Arrays.toString(faculties) + ", numberOfStudents=" + numberOfStudents + ", numberOfFaculty="
-				+ numberOfFaculty + ", studentVaccinationRate=" + studentVaccinationRate + ", facultyVaccinationRate="
+		return "Department [id=" + id + ", name=" + name + ", students=" + students + ", faculties=" + faculties
+				+ ", numberOfStudents=" + numberOfStudents + ", numberOfFaculty=" + numberOfFaculty
+				+ ", studentVaccinationRate=" + studentVaccinationRate + ", facultyVaccinationRate="
 				+ facultyVaccinationRate + ", deptVaccinationRate=" + deptVaccinationRate + "]";
 	}
+	
+	
 	
 	
 	

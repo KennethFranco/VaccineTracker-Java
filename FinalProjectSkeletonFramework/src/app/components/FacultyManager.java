@@ -21,6 +21,7 @@ public class FacultyManager {
 		newFaculty.setName(name);
 		newFaculty.setVaccineName(vaccineName);
 		newFaculty.setVaccineStatus(vaccineStatus);
+		newFaculty.setDeptName("");
 		FacRepo.save(newFaculty);
 		
 		return "Faculty Created!";
