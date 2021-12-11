@@ -19,7 +19,7 @@ public class Department {
 	private String name;
 	
 	@Column
-	private String[] students;
+	private String students;
 	
 	@Column
 	private String[] faculties;
@@ -59,11 +59,11 @@ public class Department {
 		this.name = name;
 	}
 
-	public String[] getStudents() {
+	public String getStudents() {
 		return students;
 	}
 
-	public void setStudents(String[] students) {
+	public void setStudents(String students) {
 		this.students = students;
 	}
 
@@ -115,7 +115,7 @@ public class Department {
 		this.deptVaccinationRate = deptVaccinationRate;
 	}
 
-	public Department(Long id, String name, String[] students, String[] faculties, int numberOfStudents,
+	public Department(Long id, String name, String students, String[] faculties, int numberOfStudents,
 			int numberOfFaculty, double studentVaccinationRate, double facultyVaccinationRate,
 			double deptVaccinationRate) {
 		super();
@@ -132,11 +132,12 @@ public class Department {
 
 	@Override
 	public String toString() {
-		return "Department [id=" + id + ", name=" + name + ", students=" + Arrays.toString(students) + ", faculties="
+		return "Department [id=" + id + ", name=" + name + ", students=" + students + ", faculties="
 				+ Arrays.toString(faculties) + ", numberOfStudents=" + numberOfStudents + ", numberOfFaculty="
 				+ numberOfFaculty + ", studentVaccinationRate=" + studentVaccinationRate + ", facultyVaccinationRate="
 				+ facultyVaccinationRate + ", deptVaccinationRate=" + deptVaccinationRate + "]";
 	}
+	
 	
 	
 
