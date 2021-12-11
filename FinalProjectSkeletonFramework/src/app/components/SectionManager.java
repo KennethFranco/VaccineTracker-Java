@@ -58,11 +58,21 @@ public class SectionManager {
 		Section sec = sectionRepo.getById(sectionID);
 		Student stu = studentRepo.getById(studentID);
 		
+		if (sec==null) {
+			return "Given ID for Section does not exist!";
+		}
+		
+		if (stu==null) {
+			return "Given ID for Student does not exist!";
+		}
+		
 		String getCurrentStudentsOfSection = sec.getStudents();
 		String getCurrentSectionsOfStudent = stu.getSections();
 		
 		Long addedStudentID = studentID;
 		Long addedSectionID = sectionID;
+		
+
 		
 		if (getCurrentStudentsOfSection == null) {
 			getCurrentStudentsOfSection = "";
@@ -222,8 +232,17 @@ public class SectionManager {
 	}
 
 	public String removeStudentFromSection(Long studentID, Long sectionID) {
+		Boolean exists = true;
 		Section sec = sectionRepo.getById(sectionID);
 		Student stu = studentRepo.getById(studentID);
+		
+		if (sec==null) {
+			return "Given ID for Section does not exist!";
+		}
+		
+		if (stu==null) {
+			return "Given ID for Student does not exist!";
+		}
 		
 		String currentStudents = sec.getStudents();
 		Long removedStudentID = stu.getId();
@@ -233,6 +252,41 @@ public class SectionManager {
 			return "No students in current section!";
 		}
 		
+//		CHECKING IF IT EXISTS
+		String checkerForStudents = sec.getStudents();
+		String checkerList[] = checkerForStudents.split("\\s+");
+		List<String> finalChecker = new ArrayList<>();
+		for (String i : checkerList) {
+			List<Character> chars = new ArrayList<>();
+	        for (char ch : i.toCharArray()) {
+	            String characterString = Character.toString(ch);
+
+	            if (characterString.equals("I") || characterString.equals("D") || characterString.equals("#")) {
+	            }
+	            else {
+	            	chars.add(ch);
+	            }
+	        }
+	        String numberString = "";
+			for (char ch : chars) {
+				String characterString = Character.toString(ch);
+				numberString = numberString + characterString;
+			}
+			finalChecker.add(numberString);
+		}
+		
+		System.out.println("FINAL CHECKER: " + finalChecker);
+		
+		for (String i: finalChecker) {
+			if (i.equals(studentID.toString())) {
+				exists = false;
+				break;
+			}
+		}
+		
+		if (exists == true) {
+			return "This student exists, but is not present inside this section!";
+		}
 
 		
 //		Removing Student from Section
@@ -343,6 +397,81 @@ public class SectionManager {
 		}
 		stu.setSections(finalSectionsOfStudent);
 		studentRepo.save(stu);
+		
+		
+//		---------------------------------
+//		---------------------------------
+//		VACCINATION RATE LOGIC
+		String getCurrentStudentsOfSection = sec.getStudents();
+		
+		List<Student> allStudents = studentRepo.findAll();
+		String test[] = getCurrentStudentsOfSection.split("\\s+");
+		System.out.println(test[0]);
+		System.out.println(test);
+		
+		int vaccinated = 0;
+		int notVaccinated = 0;
+		int totalStudents = 0;
+		
+		List<String> currentStudentsInSection2 = new ArrayList<>();
+//		Removing ID# from each instance in the array
+		for (String i : test) {
+			List<Character> chars = new ArrayList<>();
+	        for (char ch : i.toCharArray()) {
+	            String characterString = Character.toString(ch);
+
+	            if (characterString.equals("I") || characterString.equals("D") || characterString.equals("#")) {
+	            }
+	            else {
+	            	chars.add(ch);
+	            }
+	        }
+	        String numberString = "";
+			for (char ch : chars) {
+				String characterString = Character.toString(ch);
+				numberString = numberString + characterString;
+			}
+			currentStudentsInSection2.add(numberString);
+		}
+		
+		System.out.println(currentStudentsInSection2);
+		
+		
+		for (Student i: allStudents) {
+			System.out.println("current id: " + i.getId());
+			for(String code: currentStudentsInSection) {
+				System.out.println(code);
+				if(code.equals(i.getId().toString())) {
+					Boolean checker = i.getVaccineStatus();
+					if (checker==true) {
+						vaccinated+=1;
+					}
+					else {
+						notVaccinated+=1;
+					}
+					totalStudents+=1;
+				}
+			}
+		}
+		
+		System.out.println("V:" + vaccinated);
+		System.out.println("NV:" + notVaccinated);
+		System.out.println("TOTAL:" + totalStudents);
+		
+		double SV = vaccinated+notVaccinated;
+		double SSV = vaccinated/SV;
+		double SSSV = SSV*100;
+		System.out.println(SSSV);
+		
+		sec.setNumberOfStudents(totalStudents);
+		
+		String studentVaccinationRateFinal = Double.toString(SSSV) + "%";
+		System.out.println(studentVaccinationRateFinal);
+		
+		sec.setStudentVaccinationRate(studentVaccinationRateFinal);
+
+
+		sectionRepo.save(sec);
 		
 		return "Student removed from Section!";
 	}
