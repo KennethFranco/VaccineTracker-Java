@@ -29,7 +29,7 @@ public class Section {
 	private String students;
 	
 	@Column
-	private String[] faculties;
+	private String faculties;
 	
 	@Column
 	private int numberOfStudents;
@@ -41,7 +41,7 @@ public class Section {
 	private String studentVaccinationRate;
 	
 	@Column
-	private double facultyVaccinationRate;
+	private String facultyVaccinationRate;
 	
 	@Column
 	private double deptVaccinationRate;
@@ -82,11 +82,11 @@ public class Section {
 		this.students = students;
 	}
 
-	public String[] getFaculties() {
+	public String getFaculties() {
 		return faculties;
 	}
 
-	public void setFaculties(String[] faculties) {
+	public void setFaculties(String faculties) {
 		this.faculties = faculties;
 	}
 
@@ -114,12 +114,12 @@ public class Section {
 		this.studentVaccinationRate = studentVaccinationRate;
 	}
 
-	public double getFacultyVaccinationRate() {
+	public String getFacultyVaccinationRate() {
 		return facultyVaccinationRate;
 	}
 
-	public void setFacultyVaccinationRate(double facultyVaccinationRate) {
-		this.facultyVaccinationRate = facultyVaccinationRate;
+	public void setFacultyVaccinationRate(String facultyVaccinationRateFinal) {
+		this.facultyVaccinationRate = facultyVaccinationRateFinal;
 	}
 
 	public double getDeptVaccinationRate() {
@@ -130,8 +130,8 @@ public class Section {
 		this.deptVaccinationRate = deptVaccinationRate;
 	}
 
-	public Section(Long id, String name, String deptName, String students, String[] faculties, int numberOfStudents,
-			int numberOfFaculty, String studentVaccinationRate, double facultyVaccinationRate,
+	public Section(Long id, String name, String deptName, String students, String faculties, int numberOfStudents,
+			int numberOfFaculty, String studentVaccinationRate, String facultyVaccinationRate,
 			double deptVaccinationRate) {
 		super();
 		this.id = id;
@@ -149,11 +149,12 @@ public class Section {
 	@Override
 	public String toString() {
 		return "Section [id=" + id + ", name=" + name + ", deptName=" + deptName + ", students=" + students
-				+ ", faculties=" + Arrays.toString(faculties) + ", numberOfStudents=" + numberOfStudents
-				+ ", numberOfFaculty=" + numberOfFaculty + ", studentVaccinationRate=" + studentVaccinationRate
-				+ ", facultyVaccinationRate=" + facultyVaccinationRate + ", deptVaccinationRate=" + deptVaccinationRate
-				+ "]";
+				+ ", faculties=" + faculties + ", numberOfStudents=" + numberOfStudents + ", numberOfFaculty="
+				+ numberOfFaculty + ", studentVaccinationRate=" + studentVaccinationRate + ", facultyVaccinationRate="
+				+ facultyVaccinationRate + ", deptVaccinationRate=" + deptVaccinationRate + "]";
 	}
+
+
 
 	
 	
