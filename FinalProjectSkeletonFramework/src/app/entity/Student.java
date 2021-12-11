@@ -29,7 +29,7 @@ public class Student {
 	private String deptName;
 	
 	@Column
-	private String[] sections;
+	private String sections;
 	
 	@Column
 	private String vaccineName;
@@ -81,11 +81,11 @@ public class Student {
 		this.deptName = deptName;
 	}
 
-	public String[] getSections() {
+	public String getSections() {
 		return sections;
 	}
 
-	public void setSections(String[] sections) {
+	public void setSections(String sections) {
 		this.sections = sections;
 	}
 
@@ -105,14 +105,16 @@ public class Student {
 		this.vaccineStatus = vaccineStatus;
 	}
 
+
+
 	@Override
 	public String toString() {
 		return "Student [id=" + id + ", name=" + name + ", year=" + year + ", course=" + course + ", deptName="
-				+ deptName + ", sections=" + Arrays.toString(sections) + ", vaccineName=" + vaccineName
-				+ ", vaccineStatus=" + vaccineStatus + "]";
+				+ deptName + ", sections=" + sections + ", vaccineName=" + vaccineName + ", vaccineStatus="
+				+ vaccineStatus + "]";
 	}
 
-	public Student(Long id, String name, int year, String course, String deptName, String[] sections,
+	public Student(Long id, String name, int year, String course, String deptName, String sections,
 			String vaccineName, Boolean vaccineStatus) {
 		super();
 		this.id = id;

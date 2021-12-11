@@ -1,37 +1,78 @@
 package app.components;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import app.entity.Section;
 import app.entity.Student;
 import app.entity.Vaccine;
+import app.repository.SectionRepository;
+import app.repository.StudentRepository;
+
+
 
 @Component
 public class StudentManager {
+	
+	@Autowired
+	private StudentRepository studentRepo;
+	
+	@Autowired
+	private SectionRepository sectionRepo;
 
 	public String createStudent(String name, int year, String vaccineName, Boolean vaccineStatus) {
-		// TODO Auto-generated method stub
+		Student s = makeStudent(name, year, vaccineName, vaccineStatus);
+		
+		studentRepo.save(s);
+		
 		return "Student Created!";
+	}
+	
+
+	private Student makeStudent(String name, int year, String vaccineName, Boolean vaccineStatus)
+	{
+		Student s = new Student();
+		s.setName(name);
+		s.setYear(year);
+		s.setVaccineName(vaccineName);
+		s.setVaccineStatus(vaccineStatus);
+		return s;
 	}
 
 	public String deleteStudent(Long id) {
-		// TODO Auto-generated method stub
+		Long removedStudentID = id;
+		List<Section> allSections = sectionRepo.findAll();
+		
+//		Deleting Student from Sections
+		for (Section i: allSections) {
+			String studentsOfSection =  i.getStudents();
+			System.out.println(studentsOfSection);
+		}
+		
+//		studentRepo.deleteById(id);
 		return "Student Deleted!";
 	}
 
 	public String viewStudentDetails(Long id) {
-		// TODO Auto-generated method stub
-		return "Student Details:";
+		return "Student Details: " + studentRepo.findById(id);
 	}
 
 	public List<Student> viewAllStudents() {
-		// TODO Auto-generated method stub
-		return null;
+		return studentRepo.findAll();
 	}
 
 	public String updateStudent(Long id, String name, int year, String vaccineName, Boolean vaccineStatus) {
-		// TODO Auto-generated method stub
+		
+		Student s = studentRepo.getById(id);
+		
+		s.setName(name);
+		s.setVaccineName(vaccineName);
+		s.setVaccineStatus(vaccineStatus);
+		studentRepo.save(s);
 		return "Student Updated!";
 	}
 

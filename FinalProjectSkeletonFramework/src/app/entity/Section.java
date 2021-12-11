@@ -1,12 +1,16 @@
 package app.entity;
 import java.util.Arrays;
+import java.util.List;
 
-
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Section {
@@ -22,7 +26,7 @@ public class Section {
 	private String deptName; 
 	
 	@Column
-	private String[] students;
+	private String students;
 	
 	@Column
 	private String[] faculties;
@@ -34,7 +38,7 @@ public class Section {
 	private int numberOfFaculty;
 	
 	@Column 
-	private double studentVaccinationRate;
+	private String studentVaccinationRate;
 	
 	@Column
 	private double facultyVaccinationRate;
@@ -70,11 +74,11 @@ public class Section {
 		this.deptName = deptName;
 	}
 
-	public String[] getStudents() {
+	public String getStudents() {
 		return students;
 	}
 
-	public void setStudents(String[] students) {
+	public void setStudents(String students) {
 		this.students = students;
 	}
 
@@ -102,11 +106,11 @@ public class Section {
 		this.numberOfFaculty = numberOfFaculty;
 	}
 
-	public double getStudentVaccinationRate() {
+	public String getStudentVaccinationRate() {
 		return studentVaccinationRate;
 	}
 
-	public void setStudentVaccinationRate(double studentVaccinationRate) {
+	public void setStudentVaccinationRate(String studentVaccinationRate) {
 		this.studentVaccinationRate = studentVaccinationRate;
 	}
 
@@ -126,8 +130,8 @@ public class Section {
 		this.deptVaccinationRate = deptVaccinationRate;
 	}
 
-	public Section(Long id, String name, String deptName, String[] students, String[] faculties, int numberOfStudents,
-			int numberOfFaculty, double studentVaccinationRate, double facultyVaccinationRate,
+	public Section(Long id, String name, String deptName, String students, String[] faculties, int numberOfStudents,
+			int numberOfFaculty, String studentVaccinationRate, double facultyVaccinationRate,
 			double deptVaccinationRate) {
 		super();
 		this.id = id;
@@ -144,12 +148,14 @@ public class Section {
 
 	@Override
 	public String toString() {
-		return "Section [id=" + id + ", name=" + name + ", deptName=" + deptName + ", students="
-				+ Arrays.toString(students) + ", faculties=" + Arrays.toString(faculties) + ", numberOfStudents="
-				+ numberOfStudents + ", numberOfFaculty=" + numberOfFaculty + ", studentVaccinationRate="
-				+ studentVaccinationRate + ", facultyVaccinationRate=" + facultyVaccinationRate
-				+ ", deptVaccinationRate=" + deptVaccinationRate + "]";
+		return "Section [id=" + id + ", name=" + name + ", deptName=" + deptName + ", students=" + students
+				+ ", faculties=" + Arrays.toString(faculties) + ", numberOfStudents=" + numberOfStudents
+				+ ", numberOfFaculty=" + numberOfFaculty + ", studentVaccinationRate=" + studentVaccinationRate
+				+ ", facultyVaccinationRate=" + facultyVaccinationRate + ", deptVaccinationRate=" + deptVaccinationRate
+				+ "]";
 	}
+
+	
 	
 	
 	

@@ -193,9 +193,9 @@ public class AteneoVaccineController {
 	@Path("/createSectionDetails") 
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
-	public String createSection(@FormParam("name") String name, @FormParam("deptName") String deptName) 
+	public String createSection(@FormParam("name") String name) 
 	{
-		return secm.createSection(name, deptName);
+		return secm.createSection(name);
 	}
 	
 	@POST
@@ -256,9 +256,9 @@ public class AteneoVaccineController {
 	@Path("/updateSectionDetails") 
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
-	public String updateSection(@FormParam("id") Long id, @FormParam("name") String name, @FormParam("deptName") String deptName) 
+	public String updateSection(@FormParam("id") Long id, @FormParam("name") String name) 
 	{
-		return secm.updateSection(name, deptName);
+		return secm.updateSection(id, name);
 	}
 	
 //	COURSE
