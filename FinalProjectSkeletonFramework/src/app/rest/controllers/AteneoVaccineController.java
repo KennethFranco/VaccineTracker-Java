@@ -57,7 +57,7 @@ public class AteneoVaccineController {
     @Produces(MediaType.APPLICATION_JSON)
 	public String createVaccine(@FormParam("name") String name, @FormParam("manufacturer") String manufacturer) 
 	{
-		return vm.createVaccine(name, manufacturer);
+		return vm.createVaccine(name);
 	}
 	
 	@POST
@@ -72,9 +72,9 @@ public class AteneoVaccineController {
 	@GET
 	@Path("/viewVaccineDetails")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String viewVaccineDetails(@QueryParam("id") Long id)
+	public Optional<Vaccine> viewVaccineDetails(@QueryParam("id") Long id)
 	{
-		return vm.viewVaccineDetails(id);
+		return vm.viewVaccineDetials(id);
 	}
 	
     @GET
@@ -92,7 +92,7 @@ public class AteneoVaccineController {
 	public String updateVaccine(@FormParam("id") Long id, @FormParam("name") String name, @FormParam("manufacturer") String manufacturer) 
 	{
 		return vm.updateVaccine(id, name, manufacturer);
-	}
+	}	
     
     
 //    STUDENT
