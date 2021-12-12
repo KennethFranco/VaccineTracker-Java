@@ -20,8 +20,9 @@ public class Vaccine {
 	@Column
 	private String manufacturer;
 	
-	public Vaccine() {
-		
+	
+	public Vaccine() {}
+	{
 	}
 	
 	public Vaccine(Long id, String name, String manufacturer) {
@@ -30,39 +31,29 @@ public class Vaccine {
 		this.name = name;
 		this.manufacturer = manufacturer;
 	}
-
 	public Long getId() {
 		return id;
 	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
-
 	public String getName() {
 		return name;
 	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
-
 	public String getManufacturer() {
 		return manufacturer;
 	}
-
 	public void setManufacturer(String manufacturer) {
 		this.manufacturer = manufacturer;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "Vaccine [id=" + id + ", name=" + name + ", manufacturer=" + manufacturer + "]";
-	}
-	
-	
-	
-	
+	} 
 	
 
 }
