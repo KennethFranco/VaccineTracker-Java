@@ -27,6 +27,16 @@ public class DepartmentManager {
 
 	public String createDepartment(String name) {
 		// TODO Auto-generated method stub
+		
+		List<Department> allDepts = DepRepo.findAll();
+		
+		for(Department i: allDepts) {
+			String checkerName = i.getName();
+			if (name.equals(checkerName)) {
+				return "The name of the Faculty you are trying to add already has a record that exists in the database! Please provide a unique name.";
+			}
+		}
+		
 		Department newDepartment = new Department();
 		newDepartment.setName(name);
 		newDepartment.setStudents("");
@@ -37,8 +47,28 @@ public class DepartmentManager {
 
 	public String deleteDepartment(Long id) {
 		// TODO Auto-generated method stub
-		DepRepo.deleteById(id);
-		return "Department Deleted!";
+		
+		Department deptToDelete = DepRepo.getById(id);
+		
+		if (deptToDelete==null) {
+			return "The Faculty you are trying to delete does not exist! Please provide a valid ID.";
+		}
+		String currentStudentsOfDept = deptToDelete.getStudents();
+		String currentFacultyOfDept = deptToDelete.getFaculties();
+		
+		if (currentStudentsOfDept.equals("")) {
+			if (currentFacultyOfDept.equals("")) {
+				DepRepo.deleteById(id);
+				return "Department Deleted!";
+			}
+			else {
+				return "Department currently has Faculty inside of it. Please remove them from this department first before attempting to delete this record.";
+			}
+
+		}
+		else {
+			return "Department currently has Students inside of it. Please remove them from this department first before attempting to delete this record.";
+		}
 	}
 
 	public java.util.Optional<Department> viewDepartmentDetails(Long id) {
@@ -48,10 +78,57 @@ public class DepartmentManager {
 
 	public String updateDepartment(Long id, String name) {
 		// TODO Auto-generated method stub
-		Department deptToUpdate = DepRepo.getById(id);
-		deptToUpdate.setName(name);
-		DepRepo.save(deptToUpdate);
+//		Department deptToUpdate = DepRepo.getById(id);
+//		deptToUpdate.setName(name);
+//		DepRepo.save(deptToUpdate);
+//		
+//		return "Department Updated!";
 		
+		List<Department> allDepts = DepRepo.findAll();
+		
+		Department deptToUpdate = DepRepo.getById(id);
+		
+		if (deptToUpdate==null) {
+			return "The ID of the Department you are trying to update does not exist in the database! Please provide a valid ID.";
+		}
+		
+		Boolean deptExist = false;
+		// Checks if ID Exists
+		for (Department i: allDepts) {
+			Long checkerID = i.getId();
+			
+			if(id.toString().equals(checkerID.toString())) {
+				deptExist = true;
+			}
+			else {
+				deptExist = false;
+			}
+		}
+		
+		for (Department i: allDepts) {
+			String checkerName = i.getName();
+			Long checkerID = i.getId();
+			
+			if (checkerName.equals(name)) {
+//				Trying to update to same name, let it pass
+				if(id.toString().equals(checkerID.toString())) {
+					break;
+				}
+				else if (deptExist == false){
+					return "The ID of the Department you are trying to update does not exist in the database! Please provide a valid ID.";
+				}
+//				Trying to update to another name that already exists in the database
+				else {
+					return "The name of the Department you are trying to update to already has a record that exists in the database! Please provide a unique name.";
+				}
+			}
+		}
+		
+		
+		deptToUpdate.setName(name);
+		
+		
+		DepRepo.save(deptToUpdate);
 		return "Department Updated!";
 	}
 
