@@ -22,13 +22,13 @@ public class Course {
 	private String deptName;
 	
 	@Column
-	private String[] students;
+	private String students;
 	
 	@Column 
 	private int numberOfStudents;
 	
 	@Column
-	private double studentVaccinationRate;
+	private String studentVaccinationRate;
 	
 	@Column
 	private double deptVaccinationRate;
@@ -61,12 +61,12 @@ public class Course {
 		this.deptName = deptName;
 	}
 
-	public String[] getStudents() {
+	public String getStudents() {
 		return students;
 	}
 
-	public void setStudents(String[] students) {
-		this.students = students;
+	public void setStudents(String string) {
+		this.students = string;
 	}
 
 	public int getNumberOfStudents() {
@@ -77,12 +77,12 @@ public class Course {
 		this.numberOfStudents = numberOfStudents;
 	}
 
-	public double getStudentVaccinationRate() {
+	public String getStudentVaccinationRate() {
 		return studentVaccinationRate;
 	}
 
-	public void setStudentVaccinationRate(double studentVaccinationRate) {
-		this.studentVaccinationRate = studentVaccinationRate;
+	public void setStudentVaccinationRate(String studentVaccinationRateFinal) {
+		this.studentVaccinationRate = studentVaccinationRateFinal;
 	}
 
 	public double getDeptVaccinationRate() {
@@ -93,8 +93,8 @@ public class Course {
 		this.deptVaccinationRate = deptVaccinationRate;
 	}
 
-	public Course(Long id, String name, String deptName, String[] students, int numberOfStudents,
-			double studentVaccinationRate, double deptVaccinationRate) {
+	public Course(Long id, String name, String deptName, String students, int numberOfStudents,
+			String studentVaccinationRate, double deptVaccinationRate) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -107,10 +107,12 @@ public class Course {
 
 	@Override
 	public String toString() {
-		return "Course [id=" + id + ", name=" + name + ", deptName=" + deptName + ", students="
-				+ Arrays.toString(students) + ", numberOfStudents=" + numberOfStudents + ", studentVaccinationRate="
-				+ studentVaccinationRate + ", deptVaccinationRate=" + deptVaccinationRate + "]";
+		return "Course [id=" + id + ", name=" + name + ", deptName=" + deptName + ", students=" + students
+				+ ", numberOfStudents=" + numberOfStudents + ", studentVaccinationRate=" + studentVaccinationRate
+				+ ", deptVaccinationRate=" + deptVaccinationRate + "]";
 	}
+
+	
 	
 	
 	

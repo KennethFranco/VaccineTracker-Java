@@ -9,4 +9,5 @@ public interface CourseRepository extends JpaRepository<Course, Long>
 {
 	public Course findByName(String name);
 	public Course findByDeptName(String deptName);
+	public Course getById(Long courseID);
 }

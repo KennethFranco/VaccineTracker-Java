@@ -1,6 +1,6 @@
 package app.rest.controllers;
 import java.util.List;
-
+import java.util.Optional;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
@@ -302,7 +302,7 @@ public class AteneoVaccineController {
 	@GET
 	@Path("/viewCourseDetails")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String viewCourseDetails(@QueryParam("id") Long id)
+	public Optional<Course> viewCourseDetails(@QueryParam("id") Long id)
 	{
 		return cm.viewCourseDetails(id);
 	}

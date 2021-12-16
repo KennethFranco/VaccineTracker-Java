@@ -12,4 +12,5 @@ public interface StudentRepository extends JpaRepository<Student, Long>
 	public Student findByDeptName(String deptName);
 	public Student findByVaccineName(String vaccineName);
 	public Student findByVaccineStatus(Boolean vaccineStatus);
+	public Student getById(Long studentID);
 }
