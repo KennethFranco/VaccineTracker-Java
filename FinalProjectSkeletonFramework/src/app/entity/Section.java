@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Section {
@@ -19,11 +20,9 @@ public class Section {
 	@Column
 	private Long id;
 	
+	@NotNull(message="Name must not be null")
 	@Column
 	private String name;
-	
-	@Column
-	private String deptName; 
 	
 	@Column
 	private String students;
@@ -64,14 +63,6 @@ public class Section {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public String getDeptName() {
-		return deptName;
-	}
-
-	public void setDeptName(String deptName) {
-		this.deptName = deptName;
 	}
 
 	public String getStudents() {
@@ -130,13 +121,12 @@ public class Section {
 		this.deptVaccinationRate = deptVaccinationRate;
 	}
 
-	public Section(Long id, String name, String deptName, String students, String faculties, int numberOfStudents,
+	public Section(Long id, String name, String students, String faculties, int numberOfStudents,
 			int numberOfFaculty, String studentVaccinationRate, String facultyVaccinationRate,
 			double deptVaccinationRate) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.deptName = deptName;
 		this.students = students;
 		this.faculties = faculties;
 		this.numberOfStudents = numberOfStudents;
@@ -148,12 +138,13 @@ public class Section {
 
 	@Override
 	public String toString() {
-		return "Section [id=" + id + ", name=" + name + ", deptName=" + deptName + ", students=" + students
-				+ ", faculties=" + faculties + ", numberOfStudents=" + numberOfStudents + ", numberOfFaculty="
-				+ numberOfFaculty + ", studentVaccinationRate=" + studentVaccinationRate + ", facultyVaccinationRate="
+		return "Section [id=" + id + ", name=" + name + ", students=" + students + ", faculties=" + faculties
+				+ ", numberOfStudents=" + numberOfStudents + ", numberOfFaculty=" + numberOfFaculty
+				+ ", studentVaccinationRate=" + studentVaccinationRate + ", facultyVaccinationRate="
 				+ facultyVaccinationRate + ", deptVaccinationRate=" + deptVaccinationRate + "]";
 	}
 
+	
 
 
 	

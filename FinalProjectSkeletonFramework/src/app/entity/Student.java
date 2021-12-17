@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Student {
@@ -16,9 +17,11 @@ public class Student {
 	@Column
 	private Long id;
 	
+	@NotNull(message="Name must not be null")
 	@Column
 	private String name;
 	
+	@NotNull(message="Year must not be null")
 	@Column
 	private int year;
 	
