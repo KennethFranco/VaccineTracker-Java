@@ -42,8 +42,35 @@ public class SectionManager {
 	}
 
 	public String deleteSection(Long id) {
-		sectionRepo.deleteById(id);
-		return "Section Deleted!";
+		Section s = sectionRepo.getById(id);
+		
+		if (s==null) {
+			return "The section you are trying to delete does not exist! Please provide a valid ID.";
+		}
+		
+		String currentDeptOfSection = s.getDeptName();
+		String currentFacultiesOfSection = s.getFaculties();
+		String currentStudentsOfSection = s.getStudents();
+		
+		if (currentDeptOfSection.equals("")) {
+			if (currentFacultiesOfSection.equals("")) {
+				if (currentStudentsOfSection.equals("")){
+					sectionRepo.deleteById(id);
+					return "Section Deleted!";
+				}
+				else {
+					return "Section currently has students inside of its record. Please remove these students from this section first before attempting to delete this record.";
+				}
+			}
+			else {
+				return "Section currently has faculties inside of its record. Please remove these faculties from this section first before attempting to delete this record.";
+			}
+		}
+		else {
+			return "Section is currently present inside a department. Please remove this section from that department first before attempting to delete this record.";
+		}
+		
+
 	}
 
 	public String viewSectionDetails(Long id) {

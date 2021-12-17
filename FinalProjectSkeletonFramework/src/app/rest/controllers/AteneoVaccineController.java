@@ -72,7 +72,7 @@ public class AteneoVaccineController {
 	@GET
 	@Path("/viewVaccineDetails")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String viewVaccineDetails(@QueryParam("id") Long id)
+	public Optional<Vaccine> viewVaccineDetails(@QueryParam("id") Long id)
 	{
 		return vm.viewVaccineDetails(id);
 	}
@@ -93,6 +93,14 @@ public class AteneoVaccineController {
 	{
 		return vm.updateVaccine(id, name, manufacturer);
 	}
+	
+    @GET
+    @Path("/viewTotalVaccinationStats")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String viewTotalVaccinationStats()
+    {
+    	return vm.viewTotalVaccinationStats();
+    }
     
     
 //    STUDENT
@@ -101,10 +109,13 @@ public class AteneoVaccineController {
 	@Path("/createStudentDetails")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
-	public String createStuduent(@FormParam("name") String name, @FormParam("year") int year, @FormParam("vaccineName") String vaccineName, @FormParam("vaccineStatus") Boolean vaccineStatus) 
+	public String createStuduent(@FormParam("name") String name, @FormParam("year") int year, @FormParam("vaccineID") Long vaccineID) 
 	{
-		return sm.createStudent(name, year, vaccineName, vaccineStatus);
+		return sm.createStudent(name, year, vaccineID);
 	}
+	
+
+	
 	
 	@POST
 	@Path("/deleteStudentDetails")
@@ -118,10 +129,18 @@ public class AteneoVaccineController {
 	@GET
 	@Path("/viewStudentDetails")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String viewStudentDetails(@QueryParam("id") Long id)
+	public Optional<Student> viewStudentDetails(@QueryParam("id") Long id)
 	{
 		return sm.viewStudentDetails(id);
 	}
+	
+    @GET
+    @Path("/viewTotalStudentVaccinationRate")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String viewTotalStudentVaccinationRate()
+    {
+    	return sm.viewTotalStudentVaccinationRate();
+    }
 	
     @GET
     @Path("/viewAllStudents")
@@ -135,9 +154,9 @@ public class AteneoVaccineController {
 	@Path("/updateStudentDetails")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
-	public String updateStuduent(@FormParam("id") Long id, @FormParam("name") String name, @FormParam("year") int year, @FormParam("vaccineName") String vaccineName, @FormParam("vaccineStatus") Boolean vaccineStatus) 
+	public String updateStuduent(@FormParam("id") Long id, @FormParam("name") String name, @FormParam("year") int year, @FormParam("vaccineID") Long vaccineID) 
 	{
-		return sm.updateStudent(id, name, year, vaccineName, vaccineStatus);
+		return sm.updateStudent(id, name, year, vaccineID);
 	}
     
     
@@ -148,9 +167,9 @@ public class AteneoVaccineController {
 	@Path("/createFacultyDetails") 
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
-	public String createFaculty(@FormParam("name") String name, @FormParam("vaccineName") String vaccineName, @FormParam("vaccineStatus") Boolean vaccineStatus) 
+	public String createFaculty(@FormParam("name") String name, @FormParam("vaccineID") Long vaccineID) 
 	{
-		return fm.createFaculty(name, vaccineName, vaccineStatus);
+		return fm.createFaculty(name, vaccineID);
 	}
 	
 	@POST
@@ -182,10 +201,18 @@ public class AteneoVaccineController {
 	@Path("/updateFacultyDetails") 
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
-	public String updateFaculty(@FormParam("id") Long id, @FormParam("name") String name, @FormParam("vaccineName") String vaccineName, @FormParam("vaccineStatus") Boolean vaccineStatus) 
+	public String updateFaculty(@FormParam("id") Long id, @FormParam("name") String name, @FormParam("vaccineID") Long vaccineID) 
 	{
-		return fm.updateFaculty(id, name, vaccineName, vaccineStatus);
+		return fm.updateFaculty(id, name, vaccineID);
 	}
+	
+    @GET
+    @Path("/viewTotalFacultyVaccinationRate")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String viewTotalFacultyVaccinationRate()
+    {
+    	return fm.viewTotalFacultyVaccinationRate();
+    }
     
 //  SECTION
     
@@ -375,7 +402,7 @@ public class AteneoVaccineController {
 	@GET
 	@Path("/viewDepartmentDetails")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String viewDepartmentDetails(@QueryParam("id") Long id)
+	public Optional<Department> viewDepartmentDetails(@QueryParam("id") Long id)
 	{
 		return dm.viewDepartmentDetails(id);
 	}
