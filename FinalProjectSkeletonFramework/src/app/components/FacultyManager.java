@@ -19,7 +19,7 @@ public class FacultyManager {
 	@Autowired
 	private VaccineRepository VacRepo;
 
-	public String createFaculty(String name, String vaccineName, Boolean vaccineStatus) {
+	public String createFaculty(String name, Long vaccineID) {
 		// TODO Auto-generated method stub
 		
 		List<Faculty> allFaculty = FacRepo.findAll();
@@ -33,38 +33,54 @@ public class FacultyManager {
 		}
 		
 		Boolean vaccineExists = false;
-		for(Vaccine i: allVaccines) {
-			String checkerVaccineName = i.getName();
-			if(vaccineName.equals(checkerVaccineName)) {
-				vaccineExists = true;
-				break;
+		if (vaccineID==null) {
+			
+		}
+		else {
+			for(Vaccine i: allVaccines) {
+				System.out.println(vaccineID);
+				
+				Long checkerID = i.getId();
+				System.out.println(checkerID);
+				if(vaccineID.toString().equals(checkerID.toString())) {
+					vaccineExists = true;
+					break;
+					
+				}
+				else {
+					vaccineExists = false;
+				}
+				
+				
+			}
+		}
+
+		Faculty f = new Faculty();
+		if (vaccineExists==false) {
+			if (vaccineID==null) {
+				f.setVaccineStatus(false);
+				f.setVaccineName("");
 			}
 			else {
-				vaccineExists = false;
+				return "The vaccine you are trying to set to the faculty does not exist! Please provide a valid vaccine ID.";
 			}
 			
 		}
 		
+		f.setDeptName("");
+		f.setName(name);
+		f.setSections("");
 		
-		String returnMessage = "";
-		if (vaccineExists == true) {
-			Faculty newFaculty = new Faculty();
-			newFaculty.setName(name);
-			newFaculty.setVaccineName(vaccineName);
-			newFaculty.setVaccineStatus(vaccineStatus);
-			newFaculty.setSections("");
-			newFaculty.setDeptName("");
-			FacRepo.save(newFaculty);
-			
-			returnMessage = "Faculty Created!";
+		if (vaccineID != null) {
+			Vaccine v = VacRepo.getById(vaccineID);
+			f.setVaccineName(v.getName());
+			f.setVaccineStatus(true);
 		}
-		else if (vaccineExists == false) {
-			returnMessage = "The vaccine you are trying to set to the student does not exist! Please provide a valid vaccine name.";
-		}
+
+	
+		FacRepo.save(f);
 		
-		return returnMessage;
-		
-		
+		return "Faculty Created!\n" + "Details:\n" + f.toString();
 	}
 
 	public String deleteFaculty(Long id) {
@@ -103,7 +119,7 @@ public class FacultyManager {
 		return FacRepo.findAll();
 	}
 
-	public String updateFaculty(Long id, String name, String vaccineName, Boolean vaccineStatus) {
+	public String updateFaculty(Long id, String name, Long vaccineID) {
 		// TODO Auto-generated method stub
 		
 		List<Faculty> allFaculty = FacRepo.findAll();
@@ -127,49 +143,82 @@ public class FacultyManager {
 			}
 		}
 		
-		facToUpdate.setName(name);
-		
-		
 		Boolean vaccineExists = false;
-		String newVaccineName = "";
-		for(Vaccine i: allVaccines) {
-			String checkerID = i.getName();
-			if(vaccineName.equals(checkerID)) {
-				newVaccineName = i.getName();
-				vaccineExists = true;
-				break;
-			}
-			else if (vaccineName.equals("")) {
-				vaccineExists = true;
-				break;
-			}
-			else {
-				vaccineExists = false;
-			}
+		if (vaccineID==null) {
 			
 		}
-		
-		String returnMessage = "";
-		if (vaccineExists == true) {
-			returnMessage = "Faculty Updated!";
-			
-			if (vaccineName==null) {
-				facToUpdate.setVaccineName(newVaccineName);
+		else {
+			for(Vaccine i: allVaccines) {
+				System.out.println(vaccineID);
+				
+				Long checkerID = i.getId();
+				System.out.println(checkerID);
+				if(vaccineID.toString().equals(checkerID.toString())) {
+					vaccineExists = true;
+					break;
+					
+				}
+				else {
+					vaccineExists = false;
+				}
+				
+				
+			}
+		}
+
+		if (vaccineExists==false) {
+			if (vaccineID==null) {
 				facToUpdate.setVaccineStatus(false);
+				facToUpdate.setVaccineName("");
 			}
 			else {
-				facToUpdate.setVaccineName(newVaccineName);
-				facToUpdate.setVaccineStatus(vaccineStatus);
+				return "The vaccine you are trying to set to the faculty does not exist! Please provide a valid vaccine ID.";
 			}
 			
 		}
-		else if (vaccineExists == false) {
-			returnMessage = "The vaccine name you are trying to update to does not exist! Please provide a valid vaccine name.";
+		
+		facToUpdate.setName(name);
+
+		if (vaccineID != null) {
+			Vaccine v = VacRepo.getById(vaccineID);
+			facToUpdate.setVaccineName(v.getName());
+			facToUpdate.setVaccineStatus(true);
+		}
+
+		FacRepo.save(facToUpdate);
+		
+		return "Student Updated!\n" + "New Details:\n" + facToUpdate.toString();
+		
+		
+
+	}
+
+	public String viewTotalFacultyVaccinationRate() {
+		List<Faculty> allFaculties = FacRepo.findAll();
+		
+		int vaccinated = 0;
+		int notVaccinated = 0;
+		int totalFaculties = 0;
+		
+		for (Faculty i: allFaculties) {
+			Boolean checker = i.getVaccineStatus();
+			if (checker==true) {
+				vaccinated+=1;
+			}
+			else {
+				notVaccinated+=1;
+			}
+			totalFaculties+=1;
+			
 		}
 		
+		double SV = vaccinated+notVaccinated;
+		double SSV = vaccinated/SV;
+		double SSSV = SSV*100;
 		
-		FacRepo.save(facToUpdate);
-		return returnMessage;
+		String facultyVaccinationRateFinal = Double.toString(SSSV) + "%";
+		
+		return "Total Number of Faculties: " + totalFaculties + "\nVaccinated Faculties " + vaccinated + "\nUnvaccinated Faculties: " + notVaccinated + "\nTotal Vaccination Rate: " + facultyVaccinationRateFinal;
 	}
 
 }

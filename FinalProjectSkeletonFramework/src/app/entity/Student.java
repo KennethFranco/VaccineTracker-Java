@@ -85,8 +85,8 @@ public class Student {
 		return sections;
 	}
 
-	public void setSections(String studentCurrentSections) {
-		this.sections = studentCurrentSections;
+	public void setSections(String sections) {
+		this.sections = sections;
 	}
 
 	public String getVaccineName() {
@@ -104,8 +104,8 @@ public class Student {
 	public void setVaccineStatus(Boolean vaccineStatus) {
 		this.vaccineStatus = vaccineStatus;
 	}
-	
-	
+
+
 
 	@Override
 	public String toString() {

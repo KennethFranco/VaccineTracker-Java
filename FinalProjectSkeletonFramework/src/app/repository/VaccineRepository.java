@@ -10,4 +10,4 @@ public interface VaccineRepository extends JpaRepository<Vaccine, Long>
 {
 	public Vaccine findByName(String name);
 	public Vaccine getById(Long id);
-}
+}	
