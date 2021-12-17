@@ -1,6 +1,7 @@
 package app.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import app.entity.Department;
 import app.entity.Student;
 import app.entity.Vaccine;
 
@@ -12,4 +13,5 @@ public interface StudentRepository extends JpaRepository<Student, Long>
 	public Student findByDeptName(String deptName);
 	public Student findByVaccineName(String vaccineName);
 	public Student findByVaccineStatus(Boolean vaccineStatus);
+	public Student getById(long id);
 }

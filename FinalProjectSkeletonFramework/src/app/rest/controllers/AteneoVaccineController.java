@@ -165,7 +165,7 @@ public class AteneoVaccineController {
 	@GET
 	@Path("/viewFacultyDetails")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String viewFacultyDetails(@QueryParam("id") Long id)
+	public java.util.Optional<Faculty> viewFacultyDetails(@QueryParam("id") Long id)
 	{
 		return fm.viewFacultyDetails(id);
 	}
@@ -337,24 +337,6 @@ public class AteneoVaccineController {
 	}
 	
 	@POST
-	@Path("/addStudentToDepartment")
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    @Produces(MediaType.APPLICATION_JSON)
-	public String addStudentToDepartment(@FormParam("studentID") Long studentID, @FormParam("departmentID") Long departmentID) 
-	{
-		return dm.addStudentToDepartment(studentID, departmentID);
-	}
-	
-	@POST
-	@Path("/removeStudentFromDepartment")
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    @Produces(MediaType.APPLICATION_JSON)
-	public String removeStudentFromDepartment(@FormParam("studentID") Long studentID, @FormParam("departmentID") Long departmentID) 
-	{
-		return dm.removeStudentFromDepartment(studentID, departmentID);
-	}
-	
-	@POST
 	@Path("/addFacultyToDepartment")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
@@ -375,7 +357,7 @@ public class AteneoVaccineController {
 	@GET
 	@Path("/viewDepartmentDetails")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String viewDepartmentDetails(@QueryParam("id") Long id)
+	public java.util.Optional<Department> viewDepartmentDetails(@QueryParam("id") Long id)
 	{
 		return dm.viewDepartmentDetails(id);
 	}

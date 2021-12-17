@@ -10,6 +10,7 @@ import javax.persistence.Id;
 
 @Entity
 public class Faculty {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column
@@ -22,7 +23,7 @@ public class Faculty {
 	private String deptName;
 	
 	@Column
-	private String[] sections;
+	private String sections;
 	
 	@Column
 	private String vaccineName;
@@ -58,11 +59,11 @@ public class Faculty {
 		this.deptName = deptName;
 	}
 
-	public String[] getSections() {
+	public String getSections() {
 		return sections;
 	}
 
-	public void setSections(String[] sections) {
+	public void setSections(String sections) {
 		this.sections = sections;
 	}
 
@@ -82,7 +83,7 @@ public class Faculty {
 		this.vaccineStatus = vaccineStatus;
 	}
 
-	public Faculty(Long id, String name, String deptName, String[] sections, String vaccineName,
+	public Faculty(Long id, String name, String deptName, String sections, String vaccineName,
 			Boolean vaccineStatus) {
 		super();
 		this.id = id;
@@ -95,9 +96,11 @@ public class Faculty {
 
 	@Override
 	public String toString() {
-		return "Faculty [id=" + id + ", name=" + name + ", deptName=" + deptName + ", sections="
-				+ Arrays.toString(sections) + ", vaccineName=" + vaccineName + ", vaccineStatus=" + vaccineStatus + "]";
+		return "Faculty [id=" + id + ", name=" + name + ", deptName=" + deptName + ", sections=" + sections
+				+ ", vaccineName=" + vaccineName + ", vaccineStatus=" + vaccineStatus + "]";
 	}
+	
+	
 	
 	
 	
