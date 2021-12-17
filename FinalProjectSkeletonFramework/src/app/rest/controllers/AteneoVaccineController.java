@@ -337,24 +337,6 @@ public class AteneoVaccineController {
 	}
 	
 	@POST
-	@Path("/addStudentToDepartment")
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    @Produces(MediaType.APPLICATION_JSON)
-	public String addStudentToDepartment(@FormParam("studentID") Long studentID, @FormParam("departmentID") Long departmentID) 
-	{
-		return dm.addStudentToDepartment(studentID, departmentID);
-	}
-	
-	@POST
-	@Path("/removeStudentFromDepartment")
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    @Produces(MediaType.APPLICATION_JSON)
-	public String removeStudentFromDepartment(@FormParam("studentID") Long studentID, @FormParam("departmentID") Long departmentID) 
-	{
-		return dm.removeStudentFromDepartment(studentID, departmentID);
-	}
-	
-	@POST
 	@Path("/addFacultyToDepartment")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
